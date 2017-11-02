@@ -34,10 +34,18 @@ class BuildState extends Phaser.State {
     this.map = this.game.add.tilemap();
 
     //  Add a Tileset image to the map
-    this.map.addTilesetImage(spikeImageName);
-    this.map.addTilesetImage(characterImageName);
-    this.map.addTilesetImage(flagImageName);
     this.map.addTilesetImage(blocksSpritesheetName);
+    this.map.addTilesetImage(spikeImageName, spikeImageName, 32, 32, 0, 0, 16);
+    this.map.addTilesetImage(
+      characterImageName,
+      characterImageName,
+      32,
+      32,
+      0,
+      0,
+      32
+    );
+    this.map.addTilesetImage(flagImageName, flagImageName, 32, 32, 0, 0, 48);
 
     //  Creates a new blank layer and sets the map dimensions.
     //  In this case the map is 40x30 tiles in size and the tiles are 32x32 pixels in size.
@@ -55,7 +63,9 @@ class BuildState extends Phaser.State {
   }
 
   pickTile(sprite: any, pointer: any) {
-    this.currentTile = this.game.math.snapToFloor(pointer.x, 32) / 32;
+    this.currentTile =
+      this.game.math.snapToFloor(pointer.x, 32) / 32 +
+      this.game.math.snapToFloor(pointer.y, 32) / 32 * 16;
 
     console.log(this.currentTile);
 
